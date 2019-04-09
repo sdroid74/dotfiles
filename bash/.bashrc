@@ -4,33 +4,41 @@
 # Don't put duplicate lines in the history.
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 
+function sourceFile { 
+    local file=${1:-missing filename}
+    local SOURCE_PATH=$(dirname ${BASH_SOURCE[0]})
+    if [[ -f "$SOURCE_PATH/$file" ]]
+    then
+        source "$SOURCE_PATH/$file"
+        printBullet "including $file"
+    else
+        echo "Not found: $SOURCE_PATH/$file"
+        function printBullet {
+            printf " -> using $1"
+        }
+    fi
+}
+
+sourceFile .bash_functions
+sourceFile .bash_aliases
+
 # OS detection
 case "$OSTYPE" in 
     darwin*)
-	    echo "you are on OS X"
+	    printBullet "you are on OS X"
+	    sourceFile .bashrc_osx
 	    ;;
     linux*)
-	    echo "you are on $OSTYPE (Linux)"
+	    printBullet "you are on $OSTYPE (Linux)"
+	    sourceFile .bash_linux
 	    ;;
     *)
-            echo "you are on $OSTYPE"
+            printBullet "you are on $OSTYPE"
 	    ;;
 esac
 
 # Add $HOME/bin to PATH
 PATH=$PATH:~/bin;export PATH
-
-SOURCE_PATH=$(dirname ${BASH_SOURCE[0]})
-if [[ -f "$SOURCE_PATH/.bash_functions" ]]
-then
-    source "$SOURCE_PATH/.bash_functions"
-    printBullet "using functions from .bash_functions"
-else
-    echo "Not found: $SOURCE_PATH/.bash_functions"
-    function printBullet {
-        printf " -> using $1"
-    }
-fi
 
 
 # Prompt with colours and git hints
