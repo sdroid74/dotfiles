@@ -4,6 +4,19 @@
 # Don't put duplicate lines in the history.
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 
+# OS detection
+case "$OSTYPE" in 
+    darwin*)
+	    echo "you are on OS X"
+	    ;;
+    linux*)
+	    echo "you are on $OSTYPE (Linux)"
+	    ;;
+    *)
+            echo "you are on $OSTYPE"
+	    ;;
+esac
+
 # Add $HOME/bin to PATH
 PATH=$PATH:~/bin;export PATH
 
