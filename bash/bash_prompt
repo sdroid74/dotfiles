@@ -18,8 +18,10 @@ fg_arrow2="\[\e[38;5;230m\]"
 
 bg_system="\[\e[48;5;166m\]"
 bg_type="\[\e[48;5;254m\]"
+bg_reset="\[\e[49m\]"
 fg_system="\[\e[38;5;166m\]"
 fg_type="\[\e[38;5;166m\]"
+fg_reset="\[\e[39m\]"
 
 SYSTEM="$(uname -n)"
 TYPE="$OSTYPE"
