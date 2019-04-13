@@ -1,7 +1,21 @@
 #!/bin/bash
 
 baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-schemeDir=$baseDir/config/color-schemes
+
+
+schemeDir=~/.bashdot-color-schemesx
+if [ ! -d $schemeDir ]; then
+    if [ -d $baseDir/../.bashdot-color-schemes ]; then 
+        schemeDir=$baseDir/../.bashdot-color-schemes
+    elif [ -d $baseDir/../bashdot-color-schemes ]; then
+        schemeDir=$baseDir/../bashdot-color-schemes 
+    else 
+        echo "no scheme dir found!"
+        exit 1
+    fi
+fi
+
+echo $schemeDir
 command=${1:-list}
 
 function listSchemes {
