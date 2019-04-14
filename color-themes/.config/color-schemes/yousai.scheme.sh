@@ -1,0 +1,22 @@
+# 
+# Scheme from https://terminal.sexy
+# 
+echo -ne '\e]11;245,231,222\a'
+echo -ne '\e]10;52,48,45\a'
+echo -ne '\e]12;52,48,45\a'
+echo -ne '\e]4;0;102,102,97\a'
+echo -ne '\e]4;8;127,127,122\a'
+echo -ne '\e]4;1;153,46,46\a'
+echo -ne '\e]4;9;178,54,54\a'
+echo -ne '\e]4;2;76,50,38\a'
+echo -ne '\e]4;10;102,66,51\a'
+echo -ne '\e]4;3;166,124,83\a'
+echo -ne '\e]4;11;191,143,96\a'
+echo -ne '\e]4;4;76,115,153\a'
+echo -ne '\e]4;12;89,134,178\a'
+echo -ne '\e]4;5;191,153,134\a'
+echo -ne '\e]4;13;217,174,152\a'
+echo -ne '\e]4;6;217,119,66\a'
+echo -ne '\e]4;14;242,133,74\a'
+echo -ne '\e]4;7;52,48,45\a'
+echo -ne '\e]4;15;76,71,66\a'
