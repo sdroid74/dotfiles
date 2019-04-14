@@ -27,7 +27,7 @@ SYSTEM="$(uname -n)"
 TYPE="$OSTYPE"
 SYSTEM_PROMPT="\n${fg_arrow1}░▒▓${bg_system} ${fg_sytem}${SYSTEM}  ${bg_type}${fg_arrow1}▓▒░"
 TYPE_PROMPT="$TYPE  \$(lastExitCode) ${bg_reset}${fg_arrow2}▇▆▅▄▃▂▁"
-PROMPT=="${SYSTEM_PROMPT} ${TYPE_PROMPT}"
+PROMPT="${SYSTEM_PROMPT} ${TYPE_PROMPT}"
 DATE="\[\e[0;32m\]\d \t"
 DIR="\[\e[0;32m\]\u@\h \[\e[31m\]☆ \[\e[0;32m\]\w"
 
