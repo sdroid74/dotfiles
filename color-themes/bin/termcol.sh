@@ -3,12 +3,10 @@
 baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 
-schemeDir=~/.bashdot-color-schemesx
+schemeDir=~/.config/color-schemes
 if [ ! -d $schemeDir ]; then
-    if [ -d $baseDir/../.bashdot-color-schemes ]; then 
-        schemeDir=$baseDir/../.bashdot-color-schemes
-    elif [ -d $baseDir/../bashdot-color-schemes ]; then
-        schemeDir=$baseDir/../bashdot-color-schemes 
+    if [ -d $baseDir/../config/color-schemes ]; then 
+        schemeDir=$baseDir/../config/color-schemes
     else 
         echo "no scheme dir found!"
         exit 1
