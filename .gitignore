@@ -1,2 +1,2 @@
 .theia
-**/*.rendered
+base/bin/stowsh
