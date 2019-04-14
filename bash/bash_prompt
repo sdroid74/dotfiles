@@ -1,0 +1,35 @@
+
+# last exit code
+function lastExitCode {
+    local exit="$?"
+
+    if [ $exit != 0 ];then
+        printf '✕'
+    else
+        printf '✔'
+    fi
+    # printf "  SLES $SLES_VERSION"
+}
+
+# TODO
+fg_type="\[\e[48;5;230m\]"
+fg_arrow1="$fg_type"
+fg_arrow2="\[\e[38;5;230m\]"
+
+bg_system="\[\e[48;5;166m\]"
+bg_type="\[\e[48;5;254m\]"
+bg_reset="\[\e[49m\]"
+fg_system="\[\e[38;5;166m\]"
+fg_type="\[\e[38;5;166m\]"
+fg_reset="\[\e[39m\]"
+
+SYSTEM="$(uname -n)"
+TYPE="$OSTYPE"
+SYSTEM_PROMPT="\n${fg_arrow1}░▒▓${bg_system} ${fg_sytem}${SYSTEM}  ${bg_type}${fg_arrow1}▓▒░"
+TYPE_PROMPT="$TYPE  \$(lastExitCode) ${bg_reset}${fg_arrow2}▇▆▅▄▃▂▁"
+PROMPT=="${SYSTEM_PROMPT} ${TYPE_PROMPT}"
+DATE="\[\e[0;32m\]\d \t"
+DIR="\[\e[0;32m\]\u@\h \[\e[31m\]☆ \[\e[0;32m\]\w"
+
+PS1="${PROMPT}\[\e[0m\] \n${DIR}\n${DATE} → \[\e[0m\]"
+# PS1='\u@\h > '
