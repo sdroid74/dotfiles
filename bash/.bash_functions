@@ -69,3 +69,149 @@ function parse_git_branch {
     echo -n -e "$git_branch"
 }
 
+function color_status {
+    local EXIT="$?"
+    if [ $EXIT != 0 ]; then
+        status_code="${red}($EXIT)${nc}"
+    else
+        status_code="${green}($EXIT)${nc}"
+    fi
+    echo -n -e "$status_code"
+}
+
+# example from http://stackoverflow.com/questions/4133904/ps1-line-with-git-current-branch-and-colors
+function color_my_prompt {
+    local __user_and_host="\[\033[01;32m\]\u@\h"
+    local __cur_location="\[\033[01;34m\]\w"
+    local __git_branch_color="\[\033[31m\]"
+    #local __git_branch="\`ruby -e \"print (%x{git branch 2> /dev/null}.grep(/^\*/).first || '').gsub(/^\* (.+)$/, '(\1) ')\"\`"
+    local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+    local __prompt_tail="\[\033[35m\]$"
+    local __last_color="\[\033[00m\]"
+    export PS1="$__user_and_host $__cur_location $__git_branch_color$__git_branch$__prompt_tail$__last_color "
+}
+# color_my_prompt
+#
+#
+
+
+# find text in file using 'find <file_pattern> -exec grep -H <pattern> {} \;'
+find-grep() {
+    if [[ $# -lt 2 ]]; then 
+        echo "Usage: find-grep file-pattern search-pattern"
+    else
+        local filepattern=$1
+        local pattern=$2
+
+        find . -type f -name $filepattern -exec grep -H $pattern {} \;
+    fi
+}
+
+# Stopwatch / Countdown 
+# Found on Superuser: https://superuser.com/questions/611538/is-there-a-way-to-display-a-countdown-or-stopwatch-timer-in-a-terminal#
+function countdown(){
+   local balloonBase=$(cygpath -w "/cygdrive/c/cygwin64/home/sgaiselm/dotfiles/util") # TODO: user name is not cool
+   local balloonIcon=$(cygpath -w "$balloonBase/folder.ico")
+   local balloonScript=$(cygpath -w "$balloonBase/bin/balloon.ps1")
+   local min=$(($1*60))
+   echo "Balloon script: $balloonScript"
+   date1=$((`date +%s` + $min)); 
+   while [ "$date1" -ge `date +%s` ]; do 
+     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+     sleep 0.8
+   done
+   if [ -f $HOME/tada.mp3 ]; then
+       madplay "$HOME/tada.mp3"
+   fi
+    
+   echo "\n" | powershell -F "$balloonScript" "$balloonIcon" "Tea" "$1"
+}
+function stopwatch(){
+  date1=`date +%s`; 
+   while true; do 
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+    sleep 0.1
+   done
+}
+countdownWithDays(){
+    date1=$((`date +%s` + $1));
+    while [ "$date1" -ge `date +%s` ]; do 
+    ## Is this more than 24h away?
+    days=$(($(($(( $date1 - $(date +%s))) * 1 ))/86400))
+    echo -ne "$days day(s) and $(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r"; 
+    sleep 0.1
+    done
+}
+stopwatchWithDays(){
+    date1=`date +%s`; 
+    while true; do 
+    days=$(( $(($(date +%s) - date1)) / 86400 ))
+    echo -ne "$days day(s) and $(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+    sleep 1
+    done
+}
+
+#
+# bash speed tests to check cygwin performance.
+# https://stackoverflow.com/questions/6811435/why-does-cygwin-execute-shell-commands-very-slowly
+# 
+speed() {
+    time for i in {1..10} ; do bash -c "echo hello"; done
+}
+
+# 
+# use 'find' to list file content matching a regex
+#
+f() {
+    local option=${1:-}
+    local name=$2
+
+    
+    case $option  in 
+        grep)
+            local pattern=${3:?pattern is required}
+            echo "find . -name $name -type f -exec grep -H $pattern {} \;"
+            ;;
+        *) 
+            echo "find . -name '$name' -ls"
+            $(find . -name "'${name:?is required}'" -ls)
+    esac
+}
+# 
+# 
+#
+s_X() {
+if [ -z "$1" ]; then
+  echo '' && echo 'Please also provide server name as in config file...'
+else
+  retries=0
+  repeat=true
+  today=$(date)
+
+  while "$repeat"; do
+    ((retries+=1)) &&
+    echo "Try number $retries..." &&
+    today=$(date) &&
+    ssh "$@" &&
+    repeat=false
+    if "$repeat"; then
+      sleep 5
+    fi
+  done
+
+  echo "Total number of tries: $retries"
+  echo "Last connection at: $today"
+fi
+}
+
+# Customized SSH command
+s() {
+    local SSH_HOME=/home/arsystem/HOME/sgaisel
+    local target=${1:?missing target system}
+
+    # TODO: Unterscheidung Materna, CISM, etc...
+    ssh -t $target "cd ${SSH_HOME}; bash --rcfile ${SSH_HOME}/.sshrc"
+
+    echo "Welcome back"
+}
+
