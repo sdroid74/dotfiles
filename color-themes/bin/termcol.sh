@@ -1,12 +1,14 @@
 #!/bin/bash
 
 baseDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
+echo "baseDir: $baseDir"
 
 schemeDir=~/.config/color-schemes
 if [ ! -d $schemeDir ]; then
     if [ -d $baseDir/../config/color-schemes ]; then 
         schemeDir=$baseDir/../config/color-schemes
+    elif [ -d $baseDir/../.config/color-schemes ]; then
+        schemeDir=$baseDir/../.config/color-schemes
     else 
         echo "no scheme dir found!"
         exit 1
@@ -41,5 +43,6 @@ case $command in
         ;;
     *)
         setScheme $1
+        ;;
 esac
 
