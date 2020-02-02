@@ -204,14 +204,26 @@ else
 fi
 }
 
+# See https://superuser.com/questions/249293/rename-tmux-window-name-to-prompt-command-ps1-or-remote-ssh-hostname
+settitle() {
+    printf "\033k$1\033\\"
+}
+
 # Customized SSH command
 s() {
     local SSH_HOME=/home/arsystem/HOME/sgaisel
     local target=${1:?missing target system}
+    local tmuxTitle=$(tmux display-message -p '#W')
 
     # TODO: Unterscheidung Materna, CISM, etc...
     ssh -t $target "cd ${SSH_HOME}; bash --rcfile ${SSH_HOME}/.sshrc"
 
-    echo "Welcome back"
+    solarize dark
+    if [[ "$TERM" =~ "screen".* ]]; then
+        echo "Welcome back to $tmuxTitle"
+        settitle "$tmuxTitle"
+    else
+        echo "Welcome back to $(uname -n)"
+    fi
 }
 

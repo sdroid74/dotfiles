@@ -29,7 +29,12 @@ SYSTEM_PROMPT="\n${fg_arrow1}░▒▓${bg_system} ${fg_sytem}${SYSTEM}  ${bg_ty
 TYPE_PROMPT="$TYPE  \$(lastExitCode) ${bg_reset}${fg_arrow2}▇▆▅▄▃▂▁"
 PROMPT="${SYSTEM_PROMPT} ${TYPE_PROMPT}"
 DATE="\[\e[0;32m\]\d \t"
-DIR="\[\e[0;32m\]\u@\h \[\e[31m\]☆ \[\e[0;32m\]\w"
+DIR="\[\e[0;32m\]\u@\h \[\e[31m\]☆\[\e[0;32m\] on \$(parse_git_branch)\[\e[31m\] ☆\[\e[0;32m\] \[\e[0;32m\]\w"
 
 PS1="${PROMPT}\[\e[0m\] \n${DIR}\n${DATE} → \[\e[0m\]"
 # PS1='\u@\h > '
+
+# # from old file
+export PS1="\[\e]0;\]\u@\h\a \D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
+
+solarize dark

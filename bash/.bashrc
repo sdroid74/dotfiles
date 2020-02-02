@@ -1,4 +1,5 @@
 # If not running interactively, don't do anything
+# see https://stackoverflow.com/questions/12440287/scp-doesnt-work-when-echo-in-bashrc
 [[ "$-" != *i* ]] && return
 
 # Source global definitions
@@ -33,17 +34,22 @@ case "$OSTYPE" in
 	    printBullet "you are on OS X"
 	    sourceFile .bashrc_osx
 	    ;;
-    linux*)
-	    printBullet "you are on $OSTYPE (Linux)"
+    linux*|cygwin*)
+	    printBullet "you are on $OSTYPE"
 	    sourceFile .bash_linux
+	    if [ -f ~/motd.sh ];then
+	        ~/motd.sh
+        fi
 	    ;;
     *)
             printBullet "you are on $OSTYPE"
 	    ;;
 esac
 
-# Add $HOME/bin to PATH
-PATH=$PATH:~/bin;export PATH
+# Add $HOME/bin and $HOME/.local/bin to PATH (if exists)
+[ -d ~/bin ] && PATH=$PATH:~/bin
+[ -d ~/.local/bin ] && PATH=$PATH:~/.local/bin
+export PATH
 
 
 # Prompt with colours and git hints
