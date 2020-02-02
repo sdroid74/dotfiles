@@ -1,0 +1,53 @@
+[alias]
+    graph = log --graph --pretty=format:'%Cred%h %Creset-%C(yellow)%d%Creset %s %Cgreen(%cd) %C(blue)<%an>%Creset' --abbrev-commit --date=relative -30
+    logshort = log --pretty=format:'%Cred%h %Cgreen[%cd]%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --date=short
+    showfull = show --format=fuller --name-only
+
+    # more aliases from https://stackoverflow.com/questions/2553786/how-do-i-alias-commands-in-git
+    bv = branch -a -vv
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]%Creset%Cgreen\\ (%cd)" --decorate --numstat --date=relative
+    ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+
+    # https://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+    # list remote branches ordered by date
+    rr = for-each-ref --sort=-committerdate refs/remotes/ --count=20 --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
+    # show tracked files
+    ls-tracked = ls-tree -r --name-only HEAD
+
+    # show number of commits per author
+    # https://stackoverflow.com/questions/9839083/git-number-of-commits-per-author-on-all-branches
+    stats = shortlog -s -n --all --no-merges
+
+    # show staged changes
+    diffc = diff --cached -w
+    diffw = diff -w
+    wdiff = diff --word-diff=color --unified=1
+
+    # show stats
+    stat = show --stat --format=fuller
+
+    # from https://dzone.com/articles/lesser-known-git-commands
+    commend = commit --amend --no-edit
+
+    stashed = stash list --date=local
+    s = stash list --date=local
+    co = checkout
+[user]
+    name = Stefan Gaiselmann
+    email = stefan.gaiselmann@materna.de
+[core]
+    editor = vim
+    # TODO: HOME DIR excludesfile = /home/HOME/.gitignore_global
+[color "diff"]
+    whitespace = red reverse
+[diff]
+    # tool = p4merge
+    # tool = vimdiff
+    # tool = winmerge
+    wsErrorHighlight = all
+
+[diff "pandoc"]
+    textconv=pandoc --to=markdown
+    prompt = false
