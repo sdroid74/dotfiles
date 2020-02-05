@@ -1,4 +1,8 @@
 # global aliases (OS independent)
+
+# use 256 colors in tmux
+# https://unix.stackexchange.com/questions/1045/getting-256-colors-to-work-in-tmux#
+alias tmux='tmux -2'
 alias ll='ls -lA'
 alias lo='ls -o'	# without group information
 alias lr='ls -lrt'

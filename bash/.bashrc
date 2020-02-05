@@ -9,6 +9,10 @@ fi
 
 # Don't put duplicate lines in the history.
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+# MOTD
+if [ -f "/cygdrive/e/BspSource/bin/motd" ]; then
+    /cygdrive/e/BspSource/bin/motd
+fi
 
 function sourceFile { 
     local file=${1:-missing filename}
@@ -27,6 +31,10 @@ function sourceFile {
 
 sourceFile .bash_functions
 sourceFile .bash_aliases
+
+if [ -f ".bash_$(uname -n)" ]; then
+    sourceFile .bash_$(uname -n)
+fi
 
 # OS detection
 case "$OSTYPE" in 
@@ -87,3 +95,21 @@ if [ "PS1" == "" ]; then
     export PS1="\[\e]0;\]\u@\h\a \D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
     printBullet "using default PS1"
 fi
+
+
+# Test from http://tldp.org/LDP/abs/html/sample-bashrc.html
+# LESS man page colors (makes Man pages more readable).
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+# increase history size (from 500)
+export HISTSIZE=3000
+export HISTFILESIZE=3000
+# Preserves modification times, access times, and modes from the original file.
+alias scp='scp -p'
