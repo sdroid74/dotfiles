@@ -1,0 +1,30 @@
+[user]
+    #email = P@draigBrady.com
+    #name = Pádraig Brady
+    #signingkey = DF6FD971306037D9
+[color]
+    ui = auto
+[alias]
+    fp = format-patch --stdout -1
+    idiff = "!git diff | idiff"
+    vdiff = difftool
+    qlog = log --abbrev-commit --date=relative --pretty=format:'%C(bold yellow)%h%Creset %s %C(bold yellow)<%an>%Creset'
+    blog = log --pretty=oneline --abbrev-commit --decorate --graph
+    cmail = send-email --to='coreutils@gnu.org' -1
+    # List branches, ordered newest first
+    brdate = for-each-ref --sort=-committerdate --format='%(committerdate:iso8601) %(refname:short)' refs/heads/
+[merge]
+    tool = meld
+[diff]
+    # launched with the difftool command
+    # for example: git difftool HEAD~1.
+    # Note meld supports -d for tree comparisons
+    tool = meld
+    renames = true
+[difftool]
+    prompt = no
+[push]
+    default = tracking
+[sendemail]
+    # Note some servers only support 1 message per session
+    #smtpserver = mail.your.isp
