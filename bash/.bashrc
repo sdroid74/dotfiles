@@ -7,8 +7,11 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+# History
 # Don't put duplicate lines in the history.
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+
 # MOTD
 if [ -f "/cygdrive/e/BspSource/bin/motd" ]; then
     /cygdrive/e/BspSource/bin/motd
@@ -34,6 +37,8 @@ sourceFile .bash_aliases
 
 if [ -f ".bash_$(uname -n)" ]; then
     sourceFile .bash_$(uname -n)
+else
+    printBullet "NOT FOUND: $(pwd)/.bash_$(uname -n)"
 fi
 
 # OS detection
@@ -92,7 +97,7 @@ PS1=
 printBullet "PS1: $PS1"
 sourceFile .bash_prompt
 if [ "PS1" == "" ]; then  
-    export PS1="\[\e]0;\]\u@\h\a \D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
+    export PS1="${ps_purple}\D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
     printBullet "using default PS1"
 fi
 

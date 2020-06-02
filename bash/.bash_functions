@@ -69,6 +69,12 @@ function parse_git_branch {
     echo -n -e "$git_branch"
 }
 
+# fast version form https://stackoverflow.com/questions/4485059/git-bash-is-extremely-slow-on-windows-7-x64
+fast_git_ps1 ()
+{
+    printf -- "$(git branch 2>/dev/null | sed -ne '/^\* / s/^\* \(.*\)/ [\1] / p')"
+}
+
 function color_status {
     local EXIT="$?"
     if [ $EXIT != 0 ]; then
@@ -227,3 +233,8 @@ s() {
     fi
 }
 
+# Show JAR Manifest
+showManifest() {
+    local myJar=${1:?jar/zip file is required}
+    unzip -p $myJar META-INF/MANIFEST.MF
+}

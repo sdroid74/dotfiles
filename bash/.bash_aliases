@@ -9,6 +9,16 @@ alias lr='ls -lrt'
 alias ..='cd ..'
 alias ...='cd ../..'
 
+# git abbreviations
+alias gg='git graph'
+
+# gradle abbreviations
+list_gradle_dists() {
+    echo "== Gradle Wrapper dists =="
+    ls -l /cygdrive/c/Users/$(whoami)/.gradle/wrapper/dists/
+}
+alias g-dists='list_gradle_dists'
+
 # https://ben.lobaugh.net/blog/203195/quickly-list-all-hosts-in-your-ssh-config
 # alias sshhosts="grep -w -i "Host" ~/.ssh/config | sed 's/Host//'"
 alias ssh-hosts="ssh-list-aliases.sh"

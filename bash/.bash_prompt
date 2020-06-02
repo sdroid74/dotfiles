@@ -34,7 +34,9 @@ DIR="\[\e[0;32m\]\u@\h \[\e[31m\]☆\[\e[0;32m\] on \$(parse_git_branch)\[\e[31m
 PS1="${PROMPT}\[\e[0m\] \n${DIR}\n${DATE} → \[\e[0m\]"
 # PS1='\u@\h > '
 
-# # from old file
-export PS1="\[\e]0;\]\u@\h\a \D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
+# from old file
+# 2020-04-25 - use faster git version
+#export PS1="\D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(parse_git_branch) →${ps_nc} "
+export PS1="\D{%F %T} ${ps_red}☆ ${ps_purple}\u@\h ${ps_nc} in ${ps_green} \w \n${ps_green} on \$(fast_git_ps1) →${ps_nc} "
 
 solarize dark
